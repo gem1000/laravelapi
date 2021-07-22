@@ -1,5 +1,6 @@
 <?php
 use App\Models\Post;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,40 +19,16 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/posts', function () {
-    return Post::all();
-});
+Route::get('/posts', 'HomeController@getPosts');
 
-Route::post('/posts',function(){
-    request()->validate([
-        'title'=>'required',
-        'content'=>'required',
-    ]);
+Route::post('/json/posts/', 'TestApiController@createPost');
 
-    return Post::create([
-        'title'=>request('title'),
-        'content'=>request('content'),
-    ]);
-});
+Route::get('/comments/{id}', 'HomeController@getComment');
 
-Route::put('/posts/{post}', function(Post $post){
-    request()->validate([
-        'title'=>'required',
-        'content'=>'required'
-    ]);
-    $success = $post->update([
-        'title'=>request('title'),
-        'content'=>request('content'),
-    ]);
+Route::get('/posts/{id}', 'HomeController@getPost');
 
-    return[
-        "success"=>$success
-    ];
-});
+Route::post('/posts', 'HomeController@enterPost');
 
-Route::delete('/posts/{post}', function(Post $post){
-    $success = $post->delete();
-    return [
-        'success'=>$success
-    ];
-});
+Route::put('/posts/{id}', 'HomeController@update');
+
+Route::delete('/posts/{id}', 'HomeController@delete');

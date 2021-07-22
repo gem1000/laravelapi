@@ -2,7 +2,6 @@
 
 use App\Models\Post;
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,3 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/insert','HomeController@Insert');
+Route::get('/edit','HomeController@Edit');
+Route::get('/read','HomeController@Read');
+Route::get('/delete','HomeController@Delete');
